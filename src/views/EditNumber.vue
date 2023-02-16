@@ -2,12 +2,11 @@
   <form @submit.prevent="handleUpdate">
     <label>Edit number: </label>
     <input type="text" :placeholder="[[$route.query.number]]" v-model="newNumber" required />
-    <button v-if="newNumber.length==13" @click.prevent="updateNumber">Update Number</button>
+    <button v-if="newNumber.length>2" @click.prevent="updateNumber">Update Number</button>
   </form>
 </template>
 <script>
 export default {
-  props: ["number"],
   data() {
     return {
       newNumber: "",

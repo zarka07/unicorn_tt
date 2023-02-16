@@ -2,7 +2,7 @@
   <form @submit.prevent="handleSubmit">
     <label>New number: </label>
     <input class="input-number" type="text" v-model="newNumber.number" required />
-    <button v-if="newNumber.number.length==13" @click.prevent="addNumber">Add Number</button>
+    <button v-if="newNumber.number.length>2" @click.prevent="addNumber">Add Number</button>
   </form>
 </template>
 <script>
@@ -26,7 +26,7 @@ export default{
   }
 }
 </script>
-<style>
+<style scoped>
 form {
   background: #2f4765;
   padding: 20px;

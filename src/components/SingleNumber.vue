@@ -1,5 +1,5 @@
 <template>
-  <div class="number" :class="{ complete: number.complete }">
+  <div class="number">
     <div class="actions">
       <h3 @click="showDetails = !showDetails">{{ number.number }}</h3>
       <div class="icons">
