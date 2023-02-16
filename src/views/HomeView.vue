@@ -47,7 +47,6 @@ export default {
   data() {
     return {
       sorting: "desc",
-      page: 1,
     };
   },
   mounted() {
@@ -62,21 +61,26 @@ export default {
       this.$store.dispatch("DELETE_NUMBER", id);
     },
     prevPage() {
+      this.$store.dispatch("PAGE_DOWN");
       this.$store.dispatch("SET_NUMBERS", {
-        page: (this.page -= 1),
+        page: this.page,
         limit: this.perPage,
         sort: this.sorting,
       });
     },
     nextPage() {
+      this.$store.dispatch("PAGE_UP");
       this.$store.dispatch("SET_NUMBERS", {
-        page: (this.page += 1),
+        page: this.page,
         limit: this.perPage,
         sort: this.sorting,
       });
     },
   },
   computed: {
+    page() {
+      return this.$store.getters.GET_PAGE;
+    },
     numbers() {
       return this.$store.getters.GET_NUMBERS;
     },

@@ -20,7 +20,7 @@
       <select
         class="selectBreed"
         aria-label="numbersCount"
-        v-model="$store.state.perPage"
+        v-model="onPage"
         title="numbersCount"
         name="numbersCount"
         id="numbersCount"
@@ -31,12 +31,7 @@
       </select>
     </div>
     <div class="search">
-      <input
-        type="tel"
-        v-model="searchParam"
-        class="search-input"
-        placeholder="380xx xxx xx xx"
-      />
+      <input type="tel" v-model="searchParam" class="search-input" placeholder="" />
       <button
         class="button search-button"
         id="search"
@@ -52,9 +47,9 @@
 export default {
   data() {
     return {
+      onPage: this.$store.getters.GET_PER_PAGE,
       searchParam: "",
       currentSorting: "desc",
-      currentPage: 1,
       numbersCount: [5, 10, 15],
     };
   },
@@ -71,11 +66,13 @@ export default {
       await this.$store.dispatch("SEARCH_NUMBER", searchParam);
     },
     async reset() {
-      await this.$store.dispatch("SET_NUMBERS",{
-        page: 1,
-        limit: 5,
-        sort: 'desc'
-      }).then((this.searchParam = ""));
+      await this.$store
+        .dispatch("SET_NUMBERS", {
+          page: 1,
+          limit: 5,
+          sort: "desc",
+        })
+        .then((this.searchParam = ""));
     },
     sort(value) {
       this.sorting = value;
@@ -91,28 +88,29 @@ export default {
     sort_asc() {
       this.$store.dispatch("SORT_ASC", {
         page: this.currentPage,
-        limit: this.perPage,
+        limit: this.onPage,
         sort: "asc",
       });
     },
     sort_desc() {
       this.$store.dispatch("SORT_DESC", {
         page: this.currentPage,
-        limit: this.perPage,
+        limit: this.onPage,
         sort: "desc",
       });
     },
   },
-  computed:{
-    perPage(){
-      return this.$store.getters.GET_PER_PAGE;
-    }
+  computed: {
+    currentPage() {
+      return this.$store.getters.GET_PAGE;
+    },
   },
   watch: {
-    perPage() {
+    onPage() {
+      this.$store.dispatch("SET_PER_PAGE", this.onPage)
       this.$store.dispatch("SET_NUMBERS", {
         page: this.currentPage,
-        limit: this.perPage,
+        limit: this.onPage,
         sort: "desc",
       });
     },
@@ -158,5 +156,6 @@ export default {
 }
 .search-input {
   padding: 0 !important;
+  background-color: #fff;
 }
 </style>
