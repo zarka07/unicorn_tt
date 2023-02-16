@@ -46,7 +46,7 @@ export default {
   },
   data() {
     return {
-      sorting: "asc",
+      sorting: "desc",
       page: 1,
     };
   },
@@ -84,7 +84,7 @@ export default {
       return this.$store.getters.GET_PER_PAGE;
     },
     isNextPage() {
-      if (this.page < this.numbers.length&&this.numbers.length<=this.perPage) {
+      if (this.page < this.numbers.length && this.numbers.length <= this.perPage) {
         return 1;
       } else return 0;
     },
